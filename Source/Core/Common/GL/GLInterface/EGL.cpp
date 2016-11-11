@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 
+#include "Common/CommonFuncs.h"
 #include "Common/GL/GLInterface/EGL.h"
 #include "Common/Logging/Log.h"
 
@@ -246,7 +247,7 @@ bool cInterfaceEGL::Create(void *window_handle, bool core)
 
 std::unique_ptr<cInterfaceBase> cInterfaceEGL::CreateSharedContext()
 {
-	std::unique_ptr<cInterfaceBase> context = std::make_unique<cInterfaceEGL>();
+	std::unique_ptr<cInterfaceBase> context = make_unique<cInterfaceEGL>();
 	if (!context->Create(this))
 		return nullptr;
 	return context;

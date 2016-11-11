@@ -2,6 +2,7 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#include "Common/CommonFuncs.h"
 #include "Common/MemoryUtil.h"
 #include "Common/GL/GLUtil.h"
 
@@ -364,10 +365,10 @@ std::unique_ptr<StreamBuffer> StreamBuffer::Create(u32 type, u32 size)
 	if (!g_ogl_config.bSupportsGLBaseVertex)
 	{
 		if (!DriverDetails::HasBug(DriverDetails::BUG_BROKENBUFFERSTREAM))
-			return std::make_unique<BufferSubData>(type, size);
+			return make_unique<BufferSubData>(type, size);
 
 		// BufferData is by far the worst way, only use it if needed
-		return std::make_unique<BufferData>(type, size);
+		return make_unique<BufferData>(type, size);
 	}
 
 	// Prefer the syncing buffers over the orphaning one
@@ -376,26 +377,26 @@ std::unique_ptr<StreamBuffer> StreamBuffer::Create(u32 type, u32 size)
 		// pinned memory is much faster than buffer storage on AMD cards
 		if (g_ogl_config.bSupportsGLPinnedMemory &&
 			!(DriverDetails::HasBug(DriverDetails::BUG_BROKENPINNEDMEMORY) && type == GL_ELEMENT_ARRAY_BUFFER))
-			return std::make_unique<PinnedMemory>(type, size);
+			return make_unique<PinnedMemory>(type, size);
 
 		// buffer storage works well in most situations
 		bool coherent = DriverDetails::HasBug(DriverDetails::BUG_BROKENEXPLICITFLUSH);
 		if (g_ogl_config.bSupportsGLBufferStorage &&
 			!(DriverDetails::HasBug(DriverDetails::BUG_BROKENBUFFERSTORAGE) && type == GL_ARRAY_BUFFER) &&
 			!(DriverDetails::HasBug(DriverDetails::BUG_INTELBROKENBUFFERSTORAGE) && type == GL_ELEMENT_ARRAY_BUFFER))
-			return std::make_unique<BufferStorage>(type, size, coherent);
+			return make_unique<BufferStorage>(type, size, coherent);
 
 		// don't fall back to MapAnd* for Nvidia drivers
 		if (DriverDetails::HasBug(DriverDetails::BUG_BROKENUNSYNCMAPPING))
-			return std::make_unique<BufferSubData>(type, size);
+			return make_unique<BufferSubData>(type, size);
 
 		// mapping fallback
 		if (g_ogl_config.bSupportsGLSync)
-			return std::make_unique<MapAndSync>(type, size);
+			return make_unique<MapAndSync>(type, size);
 	}
 
 	// default fallback, should work everywhere, but isn't the best way to do this job
-	return std::make_unique<MapAndOrphan>(type, size);
+	return make_unique<MapAndOrphan>(type, size);
 }
 
 }

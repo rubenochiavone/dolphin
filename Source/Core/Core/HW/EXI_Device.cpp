@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/Logging/Log.h"
 #include "Core/HW/EXI_Device.h"
@@ -98,47 +99,47 @@ std::unique_ptr<IEXIDevice> EXIDevice_Create(TEXIDevices device_type, const int 
 	switch (device_type)
 	{
 	case EXIDEVICE_DUMMY:
-		result = std::make_unique<CEXIDummy>("Dummy");
+		result = make_unique<CEXIDummy>("Dummy");
 		break;
 
 	case EXIDEVICE_MEMORYCARD:
 	case EXIDEVICE_MEMORYCARDFOLDER:
 	{
 		bool gci_folder = (device_type == EXIDEVICE_MEMORYCARDFOLDER);
-		result = std::make_unique<CEXIMemoryCard>(channel_num, gci_folder);
+		result = make_unique<CEXIMemoryCard>(channel_num, gci_folder);
 		break;
 	}
 	case EXIDEVICE_MASKROM:
-		result = std::make_unique<CEXIIPL>();
+		result = make_unique<CEXIIPL>();
 		break;
 
 	case EXIDEVICE_AD16:
-		result = std::make_unique<CEXIAD16>();
+		result = make_unique<CEXIAD16>();
 		break;
 
 	case EXIDEVICE_MIC:
-		result = std::make_unique<CEXIMic>(channel_num);
+		result = make_unique<CEXIMic>(channel_num);
 		break;
 
 	case EXIDEVICE_ETH:
-		result = std::make_unique<CEXIETHERNET>();
+		result = make_unique<CEXIETHERNET>();
 		break;
 
 	case EXIDEVICE_AM_BASEBOARD:
-		result = std::make_unique<CEXIAMBaseboard>();
+		result = make_unique<CEXIAMBaseboard>();
 		break;
 
 	case EXIDEVICE_GECKO:
-		result = std::make_unique<CEXIGecko>();
+		result = make_unique<CEXIGecko>();
 		break;
 
 	case EXIDEVICE_AGP:
-		result = std::make_unique<CEXIAgp>(channel_num);
+		result = make_unique<CEXIAgp>(channel_num);
 		break;
 
 	case EXIDEVICE_NONE:
 	default:
-		result = std::make_unique<IEXIDevice>();
+		result = make_unique<IEXIDevice>();
 		break;
 	}
 

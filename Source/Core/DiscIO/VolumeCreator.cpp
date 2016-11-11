@@ -11,6 +11,7 @@
 
 #include <mbedtls/aes.h>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/StringUtil.h"
 #include "Common/Logging/Log.h"
@@ -57,10 +58,10 @@ std::unique_ptr<IVolume> CreateVolumeFromFilename(const std::string& filename, u
 	{
 		case DISC_TYPE_WII:
 		case DISC_TYPE_GC:
-			return std::make_unique<CVolumeGC>(std::move(reader));
+			return make_unique<CVolumeGC>(std::move(reader));
 
 		case DISC_TYPE_WAD:
-			return std::make_unique<CVolumeWAD>(std::move(reader));
+			return make_unique<CVolumeWAD>(std::move(reader));
 
 		case DISC_TYPE_WII_CONTAINER:
 			return CreateVolumeFromCryptedWiiImage(std::move(reader), partition_group, 0, volume_number);
@@ -80,7 +81,7 @@ std::unique_ptr<IVolume> CreateVolumeFromFilename(const std::string& filename, u
 std::unique_ptr<IVolume> CreateVolumeFromDirectory(const std::string& directory, bool is_wii, const std::string& apploader, const std::string& dol)
 {
 	if (CVolumeDirectory::IsValidDirectory(directory))
-		return std::make_unique<CVolumeDirectory>(directory, is_wii, apploader, dol);
+		return make_unique<CVolumeDirectory>(directory, is_wii, apploader, dol);
 
 	return nullptr;
 }
@@ -167,7 +168,7 @@ static std::unique_ptr<IVolume> CreateVolumeFromCryptedWiiImage(std::unique_ptr<
 		{
 			u8 volume_key[16];
 			VolumeKeyForPartition(*reader, partition.offset, volume_key);
-			return std::make_unique<CVolumeWiiCrypted>(std::move(reader), partition.offset, volume_key);
+			return make_unique<CVolumeWiiCrypted>(std::move(reader), partition.offset, volume_key);
 		}
 	}
 

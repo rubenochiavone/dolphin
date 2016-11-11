@@ -9,6 +9,7 @@
 #include <strsafe.h>
 #include <unordered_map>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/MathUtil.h"
@@ -101,7 +102,7 @@ StateCache gx_state_cache;
 
 static void SetupDeviceObjects()
 {
-	g_framebuffer_manager = std::make_unique<FramebufferManager>();
+	g_framebuffer_manager = make_unique<FramebufferManager>();
 
 	D3D12_DEPTH_STENCIL_DESC depth_desc;
 	depth_desc.DepthEnable      = FALSE;
@@ -979,7 +980,7 @@ void Renderer::SwapImpl(u32 xfb_addr, u32 fb_width, u32 fb_stride, u32 fb_height
 		D3D::current_command_list->OMSetRenderTargets(1, &D3D::GetBackBuffer()->GetRTV12(), FALSE, nullptr);
 
 		g_framebuffer_manager.reset();
-		g_framebuffer_manager = std::make_unique<FramebufferManager>();
+		g_framebuffer_manager = make_unique<FramebufferManager>();
 		const float clear_color[4] = { 0.f, 0.f, 0.f, 1.f };
 
 		FramebufferManager::GetEFBColorTexture()->TransitionToResourceState(D3D::current_command_list, D3D12_RESOURCE_STATE_RENDER_TARGET);

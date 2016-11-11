@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Common/Assert.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
@@ -32,7 +33,7 @@ CVolumeDirectory::CVolumeDirectory(const std::string& _rDirectory, bool _bIsWii,
 	: m_totalNameSize(0)
 	, m_dataStartAddress(-1)
 	, m_diskHeader(DISKHEADERINFO_ADDRESS)
-	, m_diskHeaderInfo(std::make_unique<SDiskHeaderInfo>())
+	, m_diskHeaderInfo(make_unique<SDiskHeaderInfo>())
 	, m_fst_address(0)
 	, m_dol_address(0)
 {

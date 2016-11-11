@@ -126,6 +126,7 @@ TODO (in no particular order):
 #include <set>
 #include <string>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/StringUtil.h"
@@ -1507,7 +1508,7 @@ void IRBuilder::WriteToFile(u64 codeHash)
 
 	if (!writer.get())
 	{
-		writer = std::make_unique<Writer>();
+		writer = make_unique<Writer>();
 	}
 
 	FILE* const file = writer->file.GetHandle();

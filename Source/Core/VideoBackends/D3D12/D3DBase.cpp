@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/MsgHandler.h"
 #include "Common/StringUtil.h"
@@ -422,7 +423,7 @@ HRESULT Create(HWND wnd)
 	CreateDescriptorHeaps();
 	CreateRootSignatures();
 
-	command_list_mgr = std::make_unique<D3DCommandListManager>(
+	command_list_mgr = make_unique<D3DCommandListManager>(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		device12,
 		command_queue
@@ -477,7 +478,7 @@ void CreateDescriptorHeaps()
 		gpu_descriptor_heap_desc.NumDescriptors = 500000;
 		gpu_descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 
-		gpu_descriptor_heap_mgr = std::make_unique<D3DDescriptorHeapManager>(&gpu_descriptor_heap_desc, device12, 50000);
+		gpu_descriptor_heap_mgr = make_unique<D3DDescriptorHeapManager>(&gpu_descriptor_heap_desc, device12, 50000);
 
 		gpu_descriptor_heaps[0] = gpu_descriptor_heap_mgr->GetDescriptorHeap();
 
@@ -513,7 +514,7 @@ void CreateDescriptorHeaps()
 		sampler_descriptor_heap_desc.NumDescriptors = 2000;
 		sampler_descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
 
-		sampler_descriptor_heap_mgr = std::make_unique<D3DDescriptorHeapManager>(&sampler_descriptor_heap_desc, device12);
+		sampler_descriptor_heap_mgr = make_unique<D3DDescriptorHeapManager>(&sampler_descriptor_heap_desc, device12);
 
 		gpu_descriptor_heaps[1] = sampler_descriptor_heap_mgr->GetDescriptorHeap();
 	}
@@ -524,7 +525,7 @@ void CreateDescriptorHeaps()
 		dsv_descriptor_heap_desc.NumDescriptors = 2000;
 		dsv_descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 
-		dsv_descriptor_heap_mgr = std::make_unique<D3DDescriptorHeapManager>(&dsv_descriptor_heap_desc, device12);
+		dsv_descriptor_heap_mgr = make_unique<D3DDescriptorHeapManager>(&dsv_descriptor_heap_desc, device12);
 	}
 
 	{
@@ -534,7 +535,7 @@ void CreateDescriptorHeaps()
 		rtv_descriptor_heap_desc.NumDescriptors = 1000000;
 		rtv_descriptor_heap_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 
-		rtv_descriptor_heap_mgr = std::make_unique<D3DDescriptorHeapManager>(&rtv_descriptor_heap_desc, device12);
+		rtv_descriptor_heap_mgr = make_unique<D3DDescriptorHeapManager>(&rtv_descriptor_heap_desc, device12);
 	}
 }
 

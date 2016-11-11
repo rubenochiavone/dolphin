@@ -71,7 +71,7 @@ void GeckoSockServer::GeckoConnectionWaiter()
 
 	server.setBlocking(false);
 
-	auto new_client = std::make_unique<sf::TcpSocket>();
+	auto new_client = make_unique<sf::TcpSocket>();
 	while (server_running.load())
 	{
 		if (server.accept(*new_client) == sf::Socket::Done)
@@ -79,7 +79,7 @@ void GeckoSockServer::GeckoConnectionWaiter()
 			std::lock_guard<std::mutex> lk(connection_lock);
 			waiting_socks.push(std::move(new_client));
 
-			new_client = std::make_unique<sf::TcpSocket>();
+			new_client = make_unique<sf::TcpSocket>();
 		}
 
 		Common::SleepCurrentThread(1);

@@ -523,7 +523,7 @@ void CWiiSaveCrypted::do_sig()
 		m_valid = false;
 		return;
 	}
-	auto data = std::make_unique<u8[]>(data_size);
+	auto data = make_unique<u8[]>(data_size);
 
 	data_file.Seek(0xf0c0, SEEK_SET);
 	if (!data_file.ReadBytes(data.get(), data_size))

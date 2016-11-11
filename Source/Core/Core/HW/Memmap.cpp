@@ -63,7 +63,7 @@ std::unique_ptr<MMIO::Mapping> mmio_mapping;
 
 static std::unique_ptr<MMIO::Mapping> InitMMIO()
 {
-	auto mmio = std::make_unique<MMIO::Mapping>();
+	auto mmio = make_unique<MMIO::Mapping>();
 
 	CommandProcessor  ::RegisterMMIO(mmio.get(), 0x0C000000);
 	PixelEngine       ::RegisterMMIO(mmio.get(), 0x0C001000);

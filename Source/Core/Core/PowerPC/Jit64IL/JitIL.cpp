@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/Intrinsics.h"
@@ -236,7 +237,7 @@ namespace JitILProfiler
 	static std::unique_ptr<JitILProfilerFinalizer> finalizer;
 	static void Init()
 	{
-		finalizer = std::make_unique<JitILProfilerFinalizer>();
+		finalizer = make_unique<JitILProfilerFinalizer>();
 	}
 
 	static void Shutdown()

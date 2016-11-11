@@ -4,6 +4,8 @@
 
 #include <memory>
 
+#include "Common/CommonFuncs.h"
+
 #include "VideoBackends/D3D12/D3DBase.h"
 #include "VideoBackends/D3D12/D3DCommandListManager.h"
 #include "VideoBackends/D3D12/D3DStreamBuffer.h"
@@ -38,7 +40,7 @@ void ShaderConstantsManager::Init()
 {
 	// Allow a large maximum size, as we want to minimize stalls here
 	std::generate(std::begin(s_shader_constant_stream_buffers), std::end(s_shader_constant_stream_buffers), []() {
-		return std::make_unique<D3DStreamBuffer>(2 * 1024 * 1024, 64 * 1024 * 1024, nullptr);
+		return make_unique<D3DStreamBuffer>(2 * 1024 * 1024, 64 * 1024 * 1024, nullptr);
 	});
 }
 

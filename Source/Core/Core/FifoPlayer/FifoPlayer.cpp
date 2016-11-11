@@ -6,6 +6,7 @@
 #include <mutex>
 
 #include "Common/Assert.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/MsgHandler.h"
 #include "Core/ConfigManager.h"
@@ -156,7 +157,7 @@ std::unique_ptr<CPUCoreBase> FifoPlayer::GetCPUCore()
 	if (!m_File || m_File->GetFrameCount() == 0)
 		return nullptr;
 
-	return std::make_unique<CPUCore>(this);
+	return make_unique<CPUCore>(this);
 }
 
 u32 FifoPlayer::GetFrameObjectCount()

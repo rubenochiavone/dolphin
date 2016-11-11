@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Common/Atomic.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/MathUtil.h"
@@ -707,11 +708,11 @@ void Renderer::Shutdown()
 void Renderer::Init()
 {
 	// Initialize the FramebufferManager
-	g_framebuffer_manager = std::make_unique<FramebufferManager>(s_target_width, s_target_height,
+	g_framebuffer_manager = make_unique<FramebufferManager>(s_target_width, s_target_height,
 			s_MSAASamples);
 
-	m_post_processor = std::make_unique<OpenGLPostProcessing>();
-	s_raster_font = std::make_unique<RasterFont>();
+	m_post_processor = make_unique<OpenGLPostProcessing>();
+	s_raster_font = make_unique<RasterFont>();
 
 	OpenGL_CreateAttributelessVAO();
 }
@@ -1480,7 +1481,7 @@ void Renderer::SwapImpl(u32 xfbAddr, u32 fbWidth, u32 fbStride, u32 fbHeight, co
 			}
 
 			g_framebuffer_manager.reset();
-			g_framebuffer_manager = std::make_unique<FramebufferManager>(s_target_width, s_target_height, s_MSAASamples);
+			g_framebuffer_manager = make_unique<FramebufferManager>(s_target_width, s_target_height, s_MSAASamples);
 
 			PixelShaderManager::SetEfbScaleChanged();
 		}

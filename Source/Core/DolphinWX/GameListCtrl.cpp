@@ -31,6 +31,7 @@
 #include <wx/wxcrt.h>
 
 #include "Common/CDUtils.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileSearch.h"
@@ -549,7 +550,7 @@ void CGameListCtrl::ScanForISOs()
 			if (dialog.WasCancelled())
 				break;
 
-			auto iso_file = std::make_unique<GameListItem>(rFilenames[i], custom_title_map);
+			auto iso_file = make_unique<GameListItem>(rFilenames[i], custom_title_map);
 
 			if (iso_file->IsValid())
 			{
@@ -648,7 +649,7 @@ void CGameListCtrl::ScanForISOs()
 
 		for (const auto& drive : drives)
 		{
-			auto gli = std::make_unique<GameListItem>(drive, custom_title_map);
+			auto gli = make_unique<GameListItem>(drive, custom_title_map);
 
 			if (gli->IsValid())
 				m_ISOFiles.push_back(gli.release());

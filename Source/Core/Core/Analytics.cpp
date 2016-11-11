@@ -13,6 +13,7 @@
 
 #include "Common/Analytics.h"
 #include "Common/Common.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/CPUDetect.h"
 #include "Common/StringUtil.h"
@@ -59,7 +60,7 @@ void DolphinAnalytics::ReloadConfig()
 	std::unique_ptr<Common::AnalyticsReportingBackend> new_backend;
 	if (SConfig::GetInstance().m_analytics_enabled)
 	{
-		new_backend = std::make_unique<Common::HttpAnalyticsBackend>(ANALYTICS_ENDPOINT);
+		new_backend = make_unique<Common::HttpAnalyticsBackend>(ANALYTICS_ENDPOINT);
 	}
 	m_reporter.SetBackend(std::move(new_backend));
 

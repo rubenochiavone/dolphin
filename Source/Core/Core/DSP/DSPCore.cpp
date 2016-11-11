@@ -147,7 +147,7 @@ bool DSPCore_Init(const DSPInitOptions& opts)
 
 	// Initialize JIT, if necessary
 	if (opts.core_type == DSPInitOptions::CORE_JIT)
-		g_dsp_jit = std::make_unique<DSPEmitter>();
+		g_dsp_jit = make_unique<DSPEmitter>();
 
 	g_dsp_cap.reset(opts.capture_logger);
 

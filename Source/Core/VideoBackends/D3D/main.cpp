@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/StringUtil.h"
@@ -172,10 +173,10 @@ bool VideoBackend::Initialize(void *window_handle)
 void VideoBackend::Video_Prepare()
 {
 	// internal interfaces
-	g_renderer = std::make_unique<Renderer>(m_window_handle);
-	g_texture_cache = std::make_unique<TextureCache>();
-	g_vertex_manager = std::make_unique<VertexManager>();
-	g_perf_query = std::make_unique<PerfQuery>();
+	g_renderer = make_unique<Renderer>(m_window_handle);
+	g_texture_cache = make_unique<TextureCache>();
+	g_vertex_manager = make_unique<VertexManager>();
+	g_perf_query = make_unique<PerfQuery>();
 	VertexShaderCache::Init();
 	PixelShaderCache::Init();
 	GeometryShaderCache::Init();

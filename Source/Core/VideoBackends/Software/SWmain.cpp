@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/Logging/LogManager.h"
@@ -113,7 +114,7 @@ class XFBSource : public XFBSourceBase
 
 class FramebufferManager : public FramebufferManagerBase
 {
-	std::unique_ptr<XFBSourceBase> CreateXFBSource(unsigned int target_width, unsigned int target_height, unsigned int layers) override { return std::make_unique<XFBSource>(); }
+	std::unique_ptr<XFBSourceBase> CreateXFBSource(unsigned int target_width, unsigned int target_height, unsigned int layers) override { return make_unique<XFBSource>(); }
 	void GetTargetSize(unsigned int* width, unsigned int* height) override {};
 	void CopyToRealXFB(u32 xfbAddr, u32 fbStride, u32 fbHeight, const EFBRectangle& sourceRc, float Gamma = 1.0f) override
 	{
@@ -213,23 +214,23 @@ void VideoSoftware::Video_Cleanup()
 // This is called after Video_Initialize() from the Core
 void VideoSoftware::Video_Prepare()
 {
-	g_renderer = std::make_unique<SWRenderer>();
+	g_renderer = make_unique<SWRenderer>();
 
 	CommandProcessor::Init();
 	PixelEngine::Init();
 
 	BPInit();
-	g_vertex_manager = std::make_unique<SWVertexLoader>();
-	g_perf_query = std::make_unique<PerfQuery>();
+	g_vertex_manager = make_unique<SWVertexLoader>();
+	g_perf_query = make_unique<PerfQuery>();
 	Fifo::Init(); // must be done before OpcodeDecoder::Init()
 	OpcodeDecoder::Init();
 	IndexGenerator::Init();
 	VertexShaderManager::Init();
 	PixelShaderManager::Init();
-	g_texture_cache = std::make_unique<TextureCache>();
+	g_texture_cache = make_unique<TextureCache>();
 	SWRenderer::Init();
 	VertexLoaderManager::Init();
-	g_framebuffer_manager = std::make_unique<FramebufferManager>();
+	g_framebuffer_manager = make_unique<FramebufferManager>();
 
 	// Notify the core that the video backend is ready
 	Host_Message(WM_USER_CREATE);

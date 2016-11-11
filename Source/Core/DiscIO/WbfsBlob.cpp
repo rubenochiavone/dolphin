@@ -59,7 +59,7 @@ bool WbfsFileReader::OpenFiles(const std::string& filename)
 
 	while (true)
 	{
-		auto new_entry = std::make_unique<file_entry>();
+		auto new_entry = make_unique<file_entry>();
 
 		// Replace last character with index (e.g. wbfs = wbf1)
 		std::string path = filename;

@@ -8,6 +8,7 @@
 #include <sstream>
 #include <unistd.h>
 
+#include "Common/CommonFuncs.h"
 #include "Common/FileUtil.h"
 #include "Core/CoreTiming.h"
 #include "Core/MemoryWatcher.h"
@@ -27,7 +28,7 @@ static void MWCallback(u64 userdata, s64 cyclesLate)
 
 void MemoryWatcher::Init()
 {
-	s_memory_watcher = std::make_unique<MemoryWatcher>();
+	s_memory_watcher = make_unique<MemoryWatcher>();
 	s_event = CoreTiming::RegisterEvent("MemoryWatcher", MWCallback);
 	CoreTiming::ScheduleEvent(0, s_event);
 }

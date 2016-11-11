@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
@@ -228,7 +229,7 @@ void CEXIMemoryCard::SetupGciFolder(u16 sizeMb)
 		}
 	}
 
-	memorycard = std::make_unique<GCMemcardDirectory>(strDirectoryName + DIR_SEP, card_index, sizeMb, ascii,
+	memorycard = make_unique<GCMemcardDirectory>(strDirectoryName + DIR_SEP, card_index, sizeMb, ascii,
 													  country_code, CurrentGameId);
 }
 
@@ -244,7 +245,7 @@ void CEXIMemoryCard::SetupRawMemcard(u16 sizeMb)
 	{
 		filename.insert(filename.find_last_of("."), ".251");
 	}
-	memorycard = std::make_unique<MemoryCard>(filename, card_index, sizeMb);
+	memorycard = make_unique<MemoryCard>(filename, card_index, sizeMb);
 }
 
 CEXIMemoryCard::~CEXIMemoryCard()

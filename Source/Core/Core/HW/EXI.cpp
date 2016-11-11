@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 
 #include "Core/ConfigManager.h"
@@ -39,7 +40,7 @@ void Init()
 	}
 
 	for (u32 i = 0; i < MAX_EXI_CHANNELS; i++)
-		g_Channels[i] = std::make_unique<CEXIChannel>(i);
+		g_Channels[i] = make_unique<CEXIChannel>(i);
 
 	if (Movie::IsPlayingInput() && Movie::IsConfigSaved())
 	{

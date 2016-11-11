@@ -9,6 +9,8 @@
 #include <utility>
 #include <vector>
 
+#include "Common/CommonFuncs.h"
+
 class ControllerEmu;
 
 class InputConfig
@@ -25,7 +27,7 @@ public:
 	template <typename T, typename... Args>
 	void CreateController(Args&&... args)
 	{
-		m_controllers.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
+		m_controllers.emplace_back(make_unique<T>(std::forward<Args>(args)...));
 	}
 
 	ControllerEmu* GetController(int index);

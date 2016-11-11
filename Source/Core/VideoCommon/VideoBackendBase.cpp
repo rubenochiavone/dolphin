@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "Common/CommonFuncs.h"
+
 // TODO: ugly
 #ifdef _WIN32
 #include "VideoBackends/D3D/VideoBackend.h"
@@ -35,21 +37,21 @@ __declspec(dllexport) DWORD NvOptimusEnablement = 1;
 void VideoBackendBase::PopulateList()
 {
 	// OGL > D3D11 > D3D12 > SW
-	g_available_video_backends.push_back(std::make_unique<OGL::VideoBackend>());
+	g_available_video_backends.push_back(make_unique<OGL::VideoBackend>());
 #ifdef _WIN32
-	g_available_video_backends.push_back(std::make_unique<DX11::VideoBackend>());
+	g_available_video_backends.push_back(make_unique<DX11::VideoBackend>());
 
 	// More robust way to check for D3D12 support than (unreliable) OS version checks.
 	HMODULE d3d12_module = LoadLibraryA("d3d12.dll");
 	if (d3d12_module != nullptr)
 	{
 		FreeLibrary(d3d12_module);
-		g_available_video_backends.push_back(std::make_unique<DX12::VideoBackend>());
+		g_available_video_backends.push_back(make_unique<DX12::VideoBackend>());
 	}
 #endif
-	g_available_video_backends.push_back(std::make_unique<SW::VideoSoftware>());
+	g_available_video_backends.push_back(make_unique<SW::VideoSoftware>());
 
-	const auto iter = std::find_if(g_available_video_backends.begin(), g_available_video_backends.end(), [](const auto& backend) {
+	const auto iter = std::find_if(g_available_video_backends.begin(), g_available_video_backends.end(), [](decltype(*g_available_video_backends.begin()) backend) {
 		return backend != nullptr;
 	});
 
@@ -71,7 +73,7 @@ void VideoBackendBase::ActivateBackend(const std::string& name)
 	if (name.empty())
 		g_video_backend = s_default_backend;
 
-	const auto iter = std::find_if(g_available_video_backends.begin(), g_available_video_backends.end(), [&name](const auto& backend) {
+	const auto iter = std::find_if(g_available_video_backends.begin(), g_available_video_backends.end(), [&name](decltype(*g_available_video_backends.begin()) backend) {
 		return name == backend->GetName();
 	});
 

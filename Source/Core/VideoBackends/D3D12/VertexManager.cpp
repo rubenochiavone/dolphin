@@ -2,6 +2,7 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 
 #include "VideoBackends/D3D12/BoundingBox.h"
@@ -44,8 +45,8 @@ void VertexManager::CreateDeviceObjects()
 	m_vertex_draw_offset = 0;
 	m_index_draw_offset = 0;
 
-	m_vertex_stream_buffer = std::make_unique<D3DStreamBuffer>(MAXVBUFFERSIZE * 2, MAX_VBUFFER_SIZE, &m_vertex_stream_buffer_reallocated);
-	m_index_stream_buffer  = std::make_unique<D3DStreamBuffer>(MAXIBUFFERSIZE * sizeof(u16) * 2, MAXIBUFFERSIZE * sizeof(u16) * 16, &m_index_stream_buffer_reallocated);
+	m_vertex_stream_buffer = make_unique<D3DStreamBuffer>(MAXVBUFFERSIZE * 2, MAX_VBUFFER_SIZE, &m_vertex_stream_buffer_reallocated);
+	m_index_stream_buffer  = make_unique<D3DStreamBuffer>(MAXIBUFFERSIZE * sizeof(u16) * 2, MAXIBUFFERSIZE * sizeof(u16) * 16, &m_index_stream_buffer_reallocated);
 
 	SetIndexBuffer();
 

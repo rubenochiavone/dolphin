@@ -7,6 +7,7 @@
 #include <queue>
 #include <thread>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/Flag.h"
 #include "Common/Thread.h"
@@ -100,7 +101,7 @@ static void GBAConnectionWaiter()
 	server.setBlocking(false);
 	clock_server.setBlocking(false);
 
-	auto new_client = std::make_unique<sf::TcpSocket>();
+	auto new_client = make_unique<sf::TcpSocket>();
 	while (server_running.IsSet())
 	{
 		if (server.accept(*new_client) == sf::Socket::Done)
@@ -108,14 +109,14 @@ static void GBAConnectionWaiter()
 			std::lock_guard<std::mutex> lk(cs_gba);
 			waiting_socks.push(std::move(new_client));
 
-			new_client = std::make_unique<sf::TcpSocket>();
+			new_client = make_unique<sf::TcpSocket>();
 		}
 		if (clock_server.accept(*new_client) == sf::Socket::Done)
 		{
 			std::lock_guard<std::mutex> lk(cs_gba_clk);
 			waiting_clocks.push(std::move(new_client));
 
-			new_client = std::make_unique<sf::TcpSocket>();
+			new_client = make_unique<sf::TcpSocket>();
 		}
 
 		Common::SleepCurrentThread(1);

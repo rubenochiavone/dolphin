@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <memory>
 #include "Common/Common.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/ENetUtil.h"
 #include "Common/MsgHandler.h"
@@ -625,7 +626,7 @@ std::vector<const Player*> NetPlayClient::GetPlayers()
 // called from ---GUI--- thread
 void NetPlayClient::SendChatMessage(const std::string& msg)
 {
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_CHAT_MESSAGE);
 	*spac << msg;
 
@@ -635,7 +636,7 @@ void NetPlayClient::SendChatMessage(const std::string& msg)
 // called from ---CPU--- thread
 void NetPlayClient::SendPadState(const PadMapping in_game_pad, const GCPadStatus& pad)
 {
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_PAD_DATA);
 	*spac << in_game_pad;
 	*spac << pad.button
@@ -654,7 +655,7 @@ void NetPlayClient::SendPadState(const PadMapping in_game_pad, const GCPadStatus
 // called from ---CPU--- thread
 void NetPlayClient::SendWiimoteState(const PadMapping in_game_pad, const NetWiimote& nw)
 {
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_WIIMOTE_DATA);
 	*spac << in_game_pad;
 	*spac << static_cast<u8>(nw.size());
@@ -669,7 +670,7 @@ void NetPlayClient::SendWiimoteState(const PadMapping in_game_pad, const NetWiim
 // called from ---GUI--- thread
 void NetPlayClient::SendStartGamePacket()
 {
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_START_GAME);
 	*spac << m_current_game;
 
@@ -679,7 +680,7 @@ void NetPlayClient::SendStartGamePacket()
 // called from ---GUI--- thread
 void NetPlayClient::SendStopGamePacket()
 {
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_STOP_GAME);
 
 	SendAsync(std::move(spac));
@@ -1076,14 +1077,14 @@ bool NetPlayClient::LocalPlayerHasControllerMapped() const
 
 bool NetPlayClient::IsFirstInGamePad(u8 ingame_pad) const
 {
-	return std::none_of(m_pad_map.begin(), m_pad_map.begin() + ingame_pad, [](auto mapping) {
+	return std::none_of(m_pad_map.begin(), m_pad_map.begin() + ingame_pad, [](decltype(*m_pad_map.begin()) mapping) {
 		return mapping > 0;
 	});
 }
 
 u8 NetPlayClient::NumLocalPads() const
 {
-	return static_cast<u8>(std::count_if(m_pad_map.begin(), m_pad_map.end(), [this](auto mapping) {
+	return static_cast<u8>(std::count_if(m_pad_map.begin(), m_pad_map.end(), [this](decltype(*m_pad_map.begin()) mapping) {
 		return mapping == m_local_player->pid;
 	}));
 }
@@ -1150,7 +1151,7 @@ void NetPlayClient::SendTimeBase()
 
 	u64 timebase = SystemTimers::GetFakeTimeBase();
 
-	auto spac = std::make_unique<sf::Packet>();
+	auto spac = make_unique<sf::Packet>();
 	*spac << static_cast<MessageId>(NP_MSG_TIMEBASE);
 	*spac << static_cast<u32>(timebase);
 	*spac << static_cast<u32>(timebase << 32);

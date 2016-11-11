@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "Common/CommonFuncs.h"
 #include "VideoBackends/D3D/D3DBase.h"
 #include "VideoBackends/D3D/D3DShader.h"
 #include "VideoBackends/D3D/D3DState.h"
@@ -397,7 +398,7 @@ ID3D11PixelShader *GetConvertShader(const char* Type)
 TextureCache::TextureCache()
 {
 	// FIXME: Is it safe here?
-	g_encoder = std::make_unique<PSTextureEncoder>();
+	g_encoder = make_unique<PSTextureEncoder>();
 	g_encoder->Init();
 
 	palette_buf = nullptr;

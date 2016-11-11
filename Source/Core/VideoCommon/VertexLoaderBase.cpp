@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/MsgHandler.h"
 #include "Common/StringUtil.h"
@@ -206,24 +207,24 @@ std::unique_ptr<VertexLoaderBase> VertexLoaderBase::CreateVertexLoader(const TVt
 
 #if defined(COMPARE_VERTEXLOADERS) && defined(_M_X86_64)
 	// first try: Any new VertexLoader vs the old one
-	loader = std::make_unique<VertexLoaderTester>(
-			std::make_unique<VertexLoader>(vtx_desc, vtx_attr), // the software one
-			std::make_unique<VertexLoaderX64>(vtx_desc, vtx_attr), // the new one to compare
+	loader = make_unique<VertexLoaderTester>(
+			make_unique<VertexLoader>(vtx_desc, vtx_attr), // the software one
+			make_unique<VertexLoaderX64>(vtx_desc, vtx_attr), // the new one to compare
 			vtx_desc, vtx_attr);
 	if (loader->IsInitialized())
 		return loader;
 #elif defined(_M_X86_64)
-	loader = std::make_unique<VertexLoaderX64>(vtx_desc, vtx_attr);
+	loader = make_unique<VertexLoaderX64>(vtx_desc, vtx_attr);
 	if (loader->IsInitialized())
 		return loader;
 #elif defined(_M_ARM_64)
-	loader = std::make_unique<VertexLoaderARM64>(vtx_desc, vtx_attr);
+	loader = make_unique<VertexLoaderARM64>(vtx_desc, vtx_attr);
 	if (loader->IsInitialized())
 		return loader;
 #endif
 
 	// last try: The old VertexLoader
-	loader = std::make_unique<VertexLoader>(vtx_desc, vtx_attr);
+	loader = make_unique<VertexLoader>(vtx_desc, vtx_attr);
 	if (loader->IsInitialized())
 		return loader;
 

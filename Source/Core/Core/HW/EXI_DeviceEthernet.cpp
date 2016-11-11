@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/Network.h"
 #include "Common/Logging/Log.h"
@@ -20,10 +21,10 @@
 
 CEXIETHERNET::CEXIETHERNET()
 {
-	tx_fifo = std::make_unique<u8[]>(BBA_TXFIFO_SIZE);
-	mBbaMem = std::make_unique<u8[]>(BBA_MEM_SIZE);
+	tx_fifo = make_unique<u8[]>(BBA_TXFIFO_SIZE);
+	mBbaMem = make_unique<u8[]>(BBA_MEM_SIZE);
 
-	mRecvBuffer = std::make_unique<u8[]>(BBA_RECV_SIZE);
+	mRecvBuffer = make_unique<u8[]>(BBA_RECV_SIZE);
 	mRecvBufferLength = 0;
 
 	MXHardReset();

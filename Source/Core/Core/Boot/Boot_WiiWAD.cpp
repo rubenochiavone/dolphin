@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/FileUtil.h"
 #include "Common/NandPaths.h"
@@ -101,7 +102,7 @@ bool CBoot::Boot_WiiWAD(const std::string& _pFilename)
 
 	WII_IPC_HLE_Interface::SetDefaultContentFile(_pFilename);
 
-	std::unique_ptr<CDolLoader> pDolLoader = std::make_unique<CDolLoader>(pContent->m_Data->Get());
+	std::unique_ptr<CDolLoader> pDolLoader = make_unique<CDolLoader>(pContent->m_Data->Get());
 	if (!pDolLoader->IsValid())
 		return false;
 

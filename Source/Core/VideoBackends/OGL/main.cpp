@@ -41,6 +41,7 @@ Make AA apply instantly during gameplay if possible
 #include <vector>
 
 #include "Common/Atomic.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/FileSearch.h"
 #include "Common/GL/GLInterfaceBase.h"
@@ -173,13 +174,13 @@ void VideoBackend::Video_Prepare()
 {
 	GLInterface->MakeCurrent();
 
-	g_renderer = std::make_unique<Renderer>();
+	g_renderer = make_unique<Renderer>();
 
 	CommandProcessor::Init();
 	PixelEngine::Init();
 
 	BPInit();
-	g_vertex_manager = std::make_unique<VertexManager>();
+	g_vertex_manager = make_unique<VertexManager>();
 	g_perf_query = GetPerfQuery();
 	Fifo::Init(); // must be done before OpcodeDecoder::Init()
 	OpcodeDecoder::Init();
@@ -188,8 +189,8 @@ void VideoBackend::Video_Prepare()
 	PixelShaderManager::Init();
 	GeometryShaderManager::Init();
 	ProgramShaderCache::Init();
-	g_texture_cache = std::make_unique<TextureCache>();
-	g_sampler_cache = std::make_unique<SamplerCache>();
+	g_texture_cache = make_unique<TextureCache>();
+	g_sampler_cache = make_unique<SamplerCache>();
 	Renderer::Init();
 	VertexLoaderManager::Init();
 	TextureConverter::Init();

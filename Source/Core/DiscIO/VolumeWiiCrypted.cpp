@@ -30,7 +30,7 @@ namespace DiscIO
 CVolumeWiiCrypted::CVolumeWiiCrypted(std::unique_ptr<IBlobReader> reader, u64 _VolumeOffset,
 									 const unsigned char* _pVolumeKey)
 	: m_pReader(std::move(reader)),
-	m_AES_ctx(std::make_unique<mbedtls_aes_context>()),
+	m_AES_ctx(make_unique<mbedtls_aes_context>()),
 	m_VolumeOffset(_VolumeOffset),
 	m_dataOffset(0x20000),
 	m_LastDecryptedBlockOffset(-1)

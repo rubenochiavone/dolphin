@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "Common/CommonFuncs.h"
 #include "Common/FileUtil.h"
 #include "Core/Boot/Boot.h"
 #include "Core/Boot/ElfReader.h"
@@ -16,7 +17,7 @@ bool CBoot::IsElfWii(const std::string& filename)
 	   there is no need for another check, just read the file right away */
 
 	size_t filesize = File::GetSize(filename);
-	auto elf = std::make_unique<u8 []>(filesize);
+	auto elf = make_unique<u8 []>(filesize);
 
 	{
 	File::IOFile f(filename, "rb");
@@ -55,7 +56,7 @@ bool CBoot::Boot_ELF(const std::string& filename)
 {
 	// Read ELF from file
 	size_t filesize = File::GetSize(filename);
-	auto elf = std::make_unique<u8 []>(filesize);
+	auto elf = make_unique<u8 []>(filesize);
 
 	{
 	File::IOFile f(filename, "rb");

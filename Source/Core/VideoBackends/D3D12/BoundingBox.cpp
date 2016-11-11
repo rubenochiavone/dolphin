@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/MsgHandler.h"
 #include "VideoBackends/D3D12/BoundingBox.h"
@@ -49,7 +50,7 @@ void BBox::Init()
 		nullptr,
 		IID_PPV_ARGS(&s_bbox_staging_buffer)));
 
-	s_bbox_stream_buffer = std::make_unique<D3DStreamBuffer>(BBOX_STREAM_BUFFER_SIZE, BBOX_STREAM_BUFFER_SIZE, nullptr);
+	s_bbox_stream_buffer = make_unique<D3DStreamBuffer>(BBOX_STREAM_BUFFER_SIZE, BBOX_STREAM_BUFFER_SIZE, nullptr);
 
 	// D3D12 root signature UAV must be raw or structured buffers, not typed. Since we used a typed buffer,
 	// we have to use a descriptor table. Luckily, we only have to allocate this once, and it never changes.

@@ -2,6 +2,8 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#include "Common/CommonFuncs.h"
+
 #include "VideoBackends/D3D12/D3DBase.h"
 #include "VideoBackends/D3D12/D3DCommandListManager.h"
 #include "VideoBackends/D3D12/D3DDescriptorHeapManager.h"
@@ -500,10 +502,10 @@ D3D12_SHADER_BYTECODE GetConvertShader12(std::string& Type)
 
 TextureCache::TextureCache()
 {
-	s_encoder = std::make_unique<PSTextureEncoder>();
+	s_encoder = make_unique<PSTextureEncoder>();
 	s_encoder->Init();
 
-	s_efb_copy_stream_buffer = std::make_unique<D3DStreamBuffer>(1024 * 1024, 1024 * 1024, nullptr);
+	s_efb_copy_stream_buffer = make_unique<D3DStreamBuffer>(1024 * 1024, 1024 * 1024, nullptr);
 	s_efb_copy_last_cbuf_id = UINT_MAX;
 
 	s_texture_cache_entry_readback_buffer = nullptr;
@@ -513,7 +515,7 @@ TextureCache::TextureCache()
 	m_palette_pixel_shaders[GX_TL_RGB565] = GetConvertShader12(std::string("RGB565"));
 	m_palette_pixel_shaders[GX_TL_RGB5A3] = GetConvertShader12(std::string("RGB5A3"));
 
-	m_palette_stream_buffer = std::make_unique<D3DStreamBuffer>(sizeof(u16) * 256 * 1024, sizeof(u16) * 256 * 1024 * 16, nullptr);
+	m_palette_stream_buffer = make_unique<D3DStreamBuffer>(sizeof(u16) * 256 * 1024, sizeof(u16) * 256 * 1024 * 16, nullptr);
 
 	// Right now, there are only two variants of palette_uniform data. So, we'll just create an upload heap to permanently store both of these.
 	CheckHR(

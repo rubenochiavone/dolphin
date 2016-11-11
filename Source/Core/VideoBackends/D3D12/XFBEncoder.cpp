@@ -2,6 +2,7 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/MsgHandler.h"
 #include "Common/Logging/Log.h"
@@ -53,8 +54,8 @@ XFBEncoder::XFBEncoder()
 		nullptr,
 		IID_PPV_ARGS(&m_readback_buffer)));
 
-	m_upload_buffer = std::make_unique<D3DStreamBuffer>(XFB_UPLOAD_BUFFER_SIZE, XFB_UPLOAD_BUFFER_SIZE, nullptr);
-	m_encode_params_buffer = std::make_unique<D3DStreamBuffer>(XFB_ENCODER_PARAMS_BUFFER_SIZE, XFB_ENCODER_PARAMS_BUFFER_SIZE, nullptr);
+	m_upload_buffer = make_unique<D3DStreamBuffer>(XFB_UPLOAD_BUFFER_SIZE, XFB_UPLOAD_BUFFER_SIZE, nullptr);
+	m_encode_params_buffer = make_unique<D3DStreamBuffer>(XFB_ENCODER_PARAMS_BUFFER_SIZE, XFB_ENCODER_PARAMS_BUFFER_SIZE, nullptr);
 }
 
 XFBEncoder::~XFBEncoder()

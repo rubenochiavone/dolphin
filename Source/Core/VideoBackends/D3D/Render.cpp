@@ -9,6 +9,7 @@
 #include <strsafe.h>
 #include <unordered_map>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/MathUtil.h"
@@ -85,7 +86,7 @@ static void SetupDeviceObjects()
 {
 	s_television.Init();
 
-	g_framebuffer_manager = std::make_unique<FramebufferManager>();
+	g_framebuffer_manager = make_unique<FramebufferManager>();
 
 	HRESULT hr;
 
@@ -994,7 +995,7 @@ void Renderer::SwapImpl(u32 xfbAddr, u32 fbWidth, u32 fbStride, u32 fbHeight, co
 		D3D::context->OMSetRenderTargets(1, &D3D::GetBackBuffer()->GetRTV(), nullptr);
 
 		g_framebuffer_manager.reset();
-		g_framebuffer_manager = std::make_unique<FramebufferManager>();
+		g_framebuffer_manager = make_unique<FramebufferManager>();
 		float clear_col[4] = { 0.f, 0.f, 0.f, 1.f };
 		D3D::context->ClearRenderTargetView(FramebufferManager::GetEFBColorTexture()->GetRTV(), clear_col);
 		D3D::context->ClearDepthStencilView(FramebufferManager::GetEFBDepthTexture()->GetDSV(), D3D11_CLEAR_DEPTH, 0.f, 0);

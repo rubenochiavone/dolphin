@@ -2,6 +2,7 @@
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
+#include "Common/CommonFuncs.h"
 #include "Core/HW/Memmap.h"
 #include "VideoBackends/D3D12/D3DBase.h"
 #include "VideoBackends/D3D12/D3DCommandListManager.h"
@@ -159,7 +160,7 @@ void FramebufferManager::CopyToRealXFB(u32 xfbAddr, u32 fbStride, u32 fbHeight, 
 
 std::unique_ptr<XFBSourceBase> FramebufferManager::CreateXFBSource(unsigned int target_width, unsigned int target_height, unsigned int layers)
 {
-	return std::make_unique<XFBSource>(D3DTexture2D::Create(target_width, target_height,
+	return make_unique<XFBSource>(D3DTexture2D::Create(target_width, target_height,
 		TEXTURE_BIND_FLAG_SHADER_RESOURCE | TEXTURE_BIND_FLAG_RENDER_TARGET,
 		DXGI_FORMAT_R8G8B8A8_UNORM, 1, layers), layers);
 }

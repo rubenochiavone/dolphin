@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/StringUtil.h"
 #include "Common/Logging/Log.h"
@@ -93,31 +94,31 @@ std::unique_ptr<ISIDevice> SIDevice_Create(const SIDevices device, const int por
 	switch (device)
 	{
 	case SIDEVICE_GC_CONTROLLER:
-		return std::make_unique<CSIDevice_GCController>(device, port_number);
+		return make_unique<CSIDevice_GCController>(device, port_number);
 
 	case SIDEVICE_WIIU_ADAPTER:
-		return std::make_unique<CSIDevice_GCAdapter>(device, port_number);
+		return make_unique<CSIDevice_GCAdapter>(device, port_number);
 
 	case SIDEVICE_DANCEMAT:
-		return std::make_unique<CSIDevice_DanceMat>(device, port_number);
+		return make_unique<CSIDevice_DanceMat>(device, port_number);
 
 	case SIDEVICE_GC_STEERING:
-		return std::make_unique<CSIDevice_GCSteeringWheel>(device, port_number);
+		return make_unique<CSIDevice_GCSteeringWheel>(device, port_number);
 
 	case SIDEVICE_GC_TARUKONGA:
-		return std::make_unique<CSIDevice_TaruKonga>(device, port_number);
+		return make_unique<CSIDevice_TaruKonga>(device, port_number);
 
 	case SIDEVICE_GC_GBA:
-		return std::make_unique<CSIDevice_GBA>(device, port_number);
+		return make_unique<CSIDevice_GBA>(device, port_number);
 
 	case SIDEVICE_GC_KEYBOARD:
-		return std::make_unique<CSIDevice_Keyboard>(device, port_number);
+		return make_unique<CSIDevice_Keyboard>(device, port_number);
 
 	case SIDEVICE_AM_BASEBOARD:
-		return std::make_unique<CSIDevice_AMBaseboard>(device, port_number);
+		return make_unique<CSIDevice_AMBaseboard>(device, port_number);
 
 	case SIDEVICE_NONE:
 	default:
-		return std::make_unique<CSIDevice_Null>(device, port_number);
+		return make_unique<CSIDevice_Null>(device, port_number);
 	}
 }

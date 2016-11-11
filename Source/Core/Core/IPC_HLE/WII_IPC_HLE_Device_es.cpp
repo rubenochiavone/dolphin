@@ -41,6 +41,7 @@
 #include <mbedtls/aes.h>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonPaths.h"
 #include "Common/FileUtil.h"
 #include "Common/NandPaths.h"
@@ -902,7 +903,7 @@ IPCCommandResult CWII_IPC_HLE_Device_es::IOCtlV(u32 _CommandAddress)
 					if (pContent)
 					{
 						tContentFile = Common::GetTitleContentPath(TitleID, Common::FROM_SESSION_ROOT);
-						std::unique_ptr<CDolLoader> pDolLoader = std::make_unique<CDolLoader>(pContent->m_Data->Get());
+						std::unique_ptr<CDolLoader> pDolLoader = make_unique<CDolLoader>(pContent->m_Data->Get());
 
 						if (pDolLoader->IsValid())
 						{

@@ -7,6 +7,8 @@
 #include <memory>
 #include <string>
 
+#include "Common/CommonFuncs.h"
+
 #include "VideoBackends/D3D12/D3DBase.h"
 #include "VideoBackends/D3D12/D3DCommandListManager.h"
 #include "VideoBackends/D3D12/D3DDescriptorHeapManager.h"
@@ -55,7 +57,7 @@ class UtilVertexBuffer
 public:
 	explicit UtilVertexBuffer(size_t size)
 	{
-		m_stream_buffer = std::make_unique<D3DStreamBuffer>(size, size * 4, nullptr);
+		m_stream_buffer = make_unique<D3DStreamBuffer>(size, size * 4, nullptr);
 	}
 
 	~UtilVertexBuffer()
@@ -354,7 +356,7 @@ int CD3DFont::Init()
 
 	const unsigned int text_vb_size = s_max_num_vertices * sizeof(FONT2DVERTEX);
 
-	m_vertex_buffer = std::make_unique<D3DStreamBuffer>(text_vb_size * 2, text_vb_size * 16, nullptr);
+	m_vertex_buffer = make_unique<D3DStreamBuffer>(text_vb_size * 2, text_vb_size * 16, nullptr);
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC text_pso_desc = {
 		default_root_signature,                           // ID3D12RootSignature *pRootSignature;
@@ -508,9 +510,9 @@ static size_t clearq_offset;
 
 void InitUtils()
 {
-	util_vbuf_stq          = std::make_unique<UtilVertexBuffer>(0x10000);
-	util_vbuf_clearq       = std::make_unique<UtilVertexBuffer>(0x10000);
-	util_vbuf_efbpokequads = std::make_unique<UtilVertexBuffer>(0x100000);
+	util_vbuf_stq          = make_unique<UtilVertexBuffer>(0x10000);
+	util_vbuf_clearq       = make_unique<UtilVertexBuffer>(0x10000);
+	util_vbuf_efbpokequads = make_unique<UtilVertexBuffer>(0x100000);
 
 	D3D12_SAMPLER_DESC point_sampler_desc = {
 		D3D12_FILTER_MIN_MAG_MIP_POINT,

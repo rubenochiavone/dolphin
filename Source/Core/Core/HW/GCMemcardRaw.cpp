@@ -8,6 +8,7 @@
 #include <string>
 
 #include "Common/ChunkFile.h"
+#include "Common/CommonFuncs.h"
 #include "Common/CommonTypes.h"
 #include "Common/FileUtil.h"
 #include "Common/Thread.h"
@@ -30,7 +31,7 @@ MemoryCard::MemoryCard(const std::string& filename, int _card_index, u16 sizeMb)
 		// Measure size of the existing memcard file.
 		memory_card_size = (u32)pFile.GetSize();
 		nintendo_card_id = memory_card_size / SIZE_TO_Mb;
-		m_memcard_data = std::make_unique<u8[]>(memory_card_size);
+		m_memcard_data = make_unique<u8[]>(memory_card_size);
 		memset(&m_memcard_data[0], 0xFF, memory_card_size);
 
 		INFO_LOG(EXPANSIONINTERFACE, "Reading memory card %s", m_filename.c_str());
@@ -42,7 +43,7 @@ MemoryCard::MemoryCard(const std::string& filename, int _card_index, u16 sizeMb)
 		nintendo_card_id = sizeMb;
 		memory_card_size = sizeMb * SIZE_TO_Mb;
 
-		m_memcard_data = std::make_unique<u8[]>(memory_card_size);
+		m_memcard_data = make_unique<u8[]>(memory_card_size);
 		// Fills in MC_HDR_SIZE bytes
 		GCMemcard::Format(&m_memcard_data[0], m_filename.find(".JAP.raw") != std::string::npos, sizeMb);
 		memset(&m_memcard_data[MC_HDR_SIZE], 0xFF, memory_card_size - MC_HDR_SIZE);
@@ -52,7 +53,7 @@ MemoryCard::MemoryCard(const std::string& filename, int _card_index, u16 sizeMb)
 
 	// Class members (including inherited ones) have now been initialized, so
 	// it's safe to startup the flush thread (which reads them).
-	m_flush_buffer = std::make_unique<u8[]>(memory_card_size);
+	m_flush_buffer = make_unique<u8[]>(memory_card_size);
 	m_flush_thread = std::thread(&MemoryCard::FlushThread, this);
 }
 

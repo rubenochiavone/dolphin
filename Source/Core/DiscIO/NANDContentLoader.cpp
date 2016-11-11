@@ -94,7 +94,7 @@ std::string CSharedContent::AddSharedContent(const u8* hash)
 void CNANDContentDataFile::EnsureOpen()
 {
 	if (!m_file)
-		m_file = std::make_unique<File::IOFile>(m_filename, "rb");
+		m_file = make_unique<File::IOFile>(m_filename, "rb");
 	else if (!m_file->IsOpen())
 		m_file->Open(m_filename, "rb");
 }
@@ -262,7 +262,7 @@ void CNANDContentLoader::InitializeContentEntries(const std::vector<u8>& tmd, co
 			iv.fill(0);
 			std::copy(&tmd[entry_offset + 0x01E8], &tmd[entry_offset + 0x01E8 + 2], iv.begin());
 
-			content.m_Data = std::make_unique<CNANDContentDataBuffer>(AESDecode(decrypted_title_key.data(), iv.data(), &data_app[data_app_offset], rounded_size));
+			content.m_Data = make_unique<CNANDContentDataBuffer>(AESDecode(decrypted_title_key.data(), iv.data(), &data_app[data_app_offset], rounded_size));
 
 			data_app_offset += rounded_size;
 			continue;
@@ -274,7 +274,7 @@ void CNANDContentLoader::InitializeContentEntries(const std::vector<u8>& tmd, co
 		else
 			filename = StringFromFormat("%s/%08x.app", m_Path.c_str(), content.m_ContentID);
 
-		content.m_Data = std::make_unique<CNANDContentDataFile>(filename);
+		content.m_Data = make_unique<CNANDContentDataFile>(filename);
 
 		// Be graceful about incorrect TMDs.
 		if (File::Exists(filename))
@@ -321,7 +321,7 @@ const CNANDContentLoader& CNANDContentManager::GetNANDLoader(const std::string& 
 	auto it = m_map.find(content_path);
 	if (it != m_map.end())
 		return *it->second;
-	return *m_map.emplace_hint(it, std::make_pair(content_path, std::make_unique<CNANDContentLoader>(content_path)))->second;
+	return *m_map.emplace_hint(it, std::make_pair(content_path, make_unique<CNANDContentLoader>(content_path)))->second;
 }
 
 const CNANDContentLoader& CNANDContentManager::GetNANDLoader(u64 title_id, Common::FromWhichRoot from)
